@@ -68,5 +68,3 @@ docker run -p 8080:8080 --env-file .env blog-api
 ```
 go test ./...
 ```
-
-https://roadmap.sh/projects/blogging-platform-api
