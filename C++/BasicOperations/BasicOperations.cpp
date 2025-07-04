@@ -3,8 +3,8 @@
 /**
  * Function to calculate and display arithmetic operations on two numbers.
  * 
- * @param int firstNumber First number that is entered by the user
- * @param int secondNumber Second number that is entered by the user
+ * @param  int  firstNumber  First number that is entered by the user
+ * @param  int  secondNumber Second number that is entered by the user
  * @return void
  */
 void arithmeticOperations(int firstNumber, int secondNumber)
@@ -25,8 +25,8 @@ void arithmeticOperations(int firstNumber, int secondNumber)
 /**
  * Function to perform logical operations on two numbers.
  * 
- * @param int firstNumber First number that is entered by the user
- * @param int secondNumber Second number that is entered by the user
+ * @param  int  firstNumber  First number that is entered by the user
+ * @param  int  secondNumber Second number that is entered by the user
  * @return void
  */
 void logicalOperations(int firstNumber, int secondNumber)
@@ -47,8 +47,8 @@ void logicalOperations(int firstNumber, int secondNumber)
 /**
  * Function to perform bitwise operations on two numbers.
  *
- * @param int firstNumber First number that is entered by the user
- * @param int secondNumber Second number that is entered by the user
+ * @param  int  firstNumber  First number that is entered by the user
+ * @param  int  secondNumber Second number that is entered by the user
  * @return void
  */
 void bitwiseOperations(int firstNumber, int secondNumber)
@@ -73,9 +73,9 @@ void bitwiseOperations(int firstNumber, int secondNumber)
 /**
  * Function to summarize even numbers from first one to second one.
  *
- * @param int start Number from which to start with
- * @param int end Number from which to end with
- * @return int sum Summation of even numbers
+ * @param  int start Number from which to start with
+ * @param  int end   Number from which to end with
+ * @return int sum   Summation of even numbers
  */
 int sumEvenNumbers(int start, int end)
 {
@@ -93,8 +93,8 @@ int sumEvenNumbers(int start, int end)
 /**
  * Function to count divisors of the second number.
  *
- * @param int secondNumber Second number that is entered by the user
- * @return int count Count of divisord of the second number
+ * @param  int secondNumber Second number that is entered by the user
+ * @return int count        Count of divisord of the second number
  */
 int countDivisorsSecondNumber(int secondNumber)
 {
