@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Go WebSocket Chat</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 1rem;
+        }
+        .chat-box {
+            width: 80%;
+            max-width: 800px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+            overflow: hidden;
+        }
+        #messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        input, select, button {
+            padding: 8px;
+            margin: 4px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        .message {
+            margin: 5px 0;
+        }
+        .user {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h2>Go WebSocket Chat</h2>
+
+<div>
+    <input id="user" placeholder="Your name" />
+    <select id="room">
+        <option value="gophers">Gophers</option>
+        <option value="gophers (but better)">Gophers (but better)</option>
+    </select>
+    <button onclick="joinChat()">Join</button>
+</div>
+
+<div class="chat-box" id="chat" style="display:none">
+    <div id="messages"></div>
+    <input id="msg" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendMessage()" />
+</div>
+
+<script>
+    let ws;
+    function colorForUser(name) {
+        const colors = ["#4caf50", "#2196f3", "#ff9800", "#e91e63", "#9c27b0"];
+        let sum = 0;
+        for (let c of name) sum += c.charCodeAt(0);
+        return colors[sum % colors.length];
+    }
+
+    function joinChat() {
+        const user = document.getElementById("user").value.trim();
+        const room = document.getElementById("room").value;
+        if (!user) return alert("Enter your name first!");
+
+        ws = new WebSocket(`ws://${location.host}/ws?room=${encodeURIComponent(room)}&user=${encodeURIComponent(user)}`);
+
+        ws.onmessage = (e) => {
+            const msgBox = document.getElementById("messages");
+            const text = e.data;
+
+            const match = text.match(/\[(.*?)\] (.*?): (.*)/);
+            if (match) {
+                const color = colorForUser(match[2]);
+                msgBox.innerHTML += `<div class="message"><span style="color:${color}" class="user">${match[2]}</span>: ${match[3]}</div>`;
+            } else {
+                msgBox.innerHTML += `<div class="message"><i>${text}</i></div>`;
+            }
+
+            msgBox.scrollTop = msgBox.scrollHeight;
+        };
+
+        document.getElementById("chat").style.display = "block";
+    }
+
+    function sendMessage() {
+        const input = document.getElementById("msg");
+        if (input.value.trim() !== "") {
+            ws.send(input.value);
+            input.value = "";
+        }
+    }
+</script>
+</body>
+</html>
