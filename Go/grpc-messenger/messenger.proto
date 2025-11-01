@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package messenger;
+
+import "proto/google/api/annotations.proto";
+
+option go_package = "grpc-messenger/messenger;messenger";
+
+service Messenger {
+  rpc SendMessage (MessageRequest) returns (MessageResponse) {
+    option (google.api.http) = {
+      post: "/v1/messages",
+      body: "*"
+    };
+  };
+
+  rpc GetMessages (Empty) returns (stream MessageResponse) {
+    option (google.api.http) = {
+      get: "/v1/messages"
+    };
+  };
+}
+
+message MessageRequest {
+  string author = 1;
+  string content = 2;
+}
+
+message MessageResponse {
+  string author = 1;
+  string content = 2;
+  int64 timestamp = 3;
+}
+
+message Empty {}
